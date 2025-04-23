@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  nginx:
+    build: requirements/nginx/.
+    container_name: nginx
+    ports:
+      - "8443:443"
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - wordpress
+    networks:
+      - net
+  wordpress:
+    build: requirements/wordpress/.
+    container_name: wordpress
+    expose:
+      - 9000
+    volumes:
+      - ./www:/var/www/html
+    networks:
+      - net
+networks:
+  net:
