@@ -12,10 +12,29 @@ services:
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
-    volumes:
-      - ./www:/var/www/html
+    # volumes:
+    #   - ./www:/var/www/html
+    environment:
+      WORDPRESS_DB_NAME: ${DATABASE_NAME}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${MARIADB_USER}
+      WORDPRESS_USER_PASSWORD: ${MARIADB_USER_PASSWORD}
+      WORDPRESS_URL: ${WORDPRESS_URL}
+      WORDPRESS_TITLE: ${WORDPRESS_TITLE}
+      WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
+      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+      WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+    expose:
+      - 9000
+    depends_on:
+      - mariadb
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
-# networks:
-#   net:
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_USER_PASSWORD: ${MARIADB_USER_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+    expose:
+      - 3306
