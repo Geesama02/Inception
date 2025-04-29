@@ -17,7 +17,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY tools/setup_wp.sh /setup_wp.sh
-RUN chmod +x /setup_wp.sh
+RUN chmod +x /setup_wp.sh && chmod -R 755 /var/www/html
 
 EXPOSE 9000
 

@@ -1,19 +1,20 @@
-version: "3.8"
 services:
   nginx:
     build: requirements/nginx/.
     container_name: nginx
     ports:
-      - "8443:443"
-    volumes:
-      - ./www:/var/www/html
+      - "8080:443"
     depends_on:
       - wordpress
+    networks:
+      - docker-network
+    volumes:
+      - wordpress_files:/var/www/html
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
-    # volumes:
-    #   - ./www:/var/www/html
+    volumes:
+      - wordpress_files:/var/www/html
     environment:
       WORDPRESS_DB_NAME: ${DATABASE_NAME}
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
@@ -28,6 +29,8 @@ services:
       - 9000
     depends_on:
       - mariadb
+    networks:
+      - docker-network
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
@@ -36,5 +39,17 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_USER_PASSWORD: ${MARIADB_USER_PASSWORD}
       DATABASE_NAME: ${DATABASE_NAME}
+    volumes:
+      - wordpress_data:/var/lib/mysql
     expose:
       - 3306
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  wordpress_files:
+  wordpress_data:
