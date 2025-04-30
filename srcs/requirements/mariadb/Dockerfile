@@ -9,4 +9,4 @@ RUN chmod +x /setup_db.sh
 
 EXPOSE 3306
 
-CMD [ "/setup_db.sh" ]
+ENTRYPOINT [ "/setup_db.sh" ]

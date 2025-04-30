@@ -10,6 +10,7 @@ services:
       - docker-network
     volumes:
       - wordpress_files:/var/www/html
+    restart: on-failure
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
@@ -31,6 +32,7 @@ services:
       - mariadb
     networks:
       - docker-network
+    restart: on-failure
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
@@ -45,6 +47,17 @@ services:
       - 3306
     networks:
       - docker-network
+    restart: on-failure
+  redis:
+    build: requirements/bonus/redis/.
+    container_name: redis
+    volumes:
+      - redis_data:/data
+    expose:
+      - 6379
+    networks:
+      - docker-network
+    restart: on-failure
 
 networks:
   docker-network:
@@ -53,3 +66,4 @@ networks:
 volumes:
   wordpress_files:
   wordpress_data:
+  redis_data:
