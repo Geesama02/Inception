@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e
+set -e
 set -x
 
 mariadb-install-db --user=mysql
@@ -8,12 +8,6 @@ mariadb-install-db --user=mysql
 mysqld_safe &
 
 sleep 5
-
-echo "DATABASE_NAME $DATABASE_NAME;
-      MARIADB_USER $MARIADB_USER;
-      MARIADB_USER_PASSWORD $MARIADB_USER_PASSWORD;
-      MARIADB_ROOT_PASSWORD $MARIADB_ROOT_PASSWORD;
-      "
 
 echo "CREATE DATABASE IF NOT EXISTS \`${DATABASE_NAME}\`;
         ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD';

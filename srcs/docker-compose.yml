@@ -58,6 +58,23 @@ services:
     networks:
       - docker-network
     restart: on-failure
+  ftp:
+    build: 
+      context: requirements/bonus/ftp/.
+      args: 
+        FTP_USER: ${FTP_USER}
+        FTP_PASS: ${FTP_PASS}
+    container_name: ftp
+    volumes:
+      - wordpress_files:/var/www/wp
+    expose:
+      - 21
+      - 21000-21010
+    networks:
+      - docker-network
+    restart: on-failure
+    depends_on:
+      - wordpress
 
 networks:
   docker-network:
