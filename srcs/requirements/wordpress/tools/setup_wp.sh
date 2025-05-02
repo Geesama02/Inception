@@ -7,11 +7,6 @@ until mysqladmin ping -h"${WORDPRESS_DB_HOST}" --silent; do
     sleep 2
 done
 
-echo "WORDPRESS_DB_NAME $WORDPRESS_DB_NAME;
-      WORDPRESS_DB_HOST $WORDPRESS_DB_HOST;
-      WORDPRESS_DB_USER $WORDPRESS_DB_USER;
-      WORDPRESS_USER_PASSWORD $WORDPRESS_USER_PASSWORD;
-      "
 if [ ! -f /var/www/html/wp-config.php ]; then
 
     wp config create --dbname="${WORDPRESS_DB_NAME}" \

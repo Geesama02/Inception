@@ -5,7 +5,7 @@ RUN apt update -y && apt upgrade -y && \
     php-mysql \
     mariadb-client \
     curl && \
-    mkdir -p /run/php
+    mkdir -p /run/php && chown www-data:www-data /run/php
 
 WORKDIR /var/www/html
 
