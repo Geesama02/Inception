@@ -4,6 +4,7 @@ services:
     container_name: nginx
     ports:
       - "8080:443"
+      - "8081:8081"
     depends_on:
       - wordpress
     networks:
@@ -75,6 +76,14 @@ services:
     restart: on-failure
     depends_on:
       - wordpress
+  adminer:
+    build: requirements/bonus/adminer/.
+    container_name: adminer
+    expose:
+      - "8081:8081"
+    networks:
+      - docker-network
+    restart: on-failure
 
 networks:
   docker-network:
