@@ -84,6 +84,25 @@ services:
     networks:
       - docker-network
     restart: on-failure
+  web:
+    build: requirements/bonus/web/.
+    container_name: web
+    ports:
+      - "8000:8000"
+    networks:
+      - docker-network
+    restart: on-failure
+  portainer:
+    build: requirements/bonus/portainer/.
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    networks:
+      - docker-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: on-failure
 
 networks:
   docker-network:
@@ -93,3 +112,4 @@ volumes:
   wordpress_files:
   wordpress_data:
   redis_data:
+  portainer_data:
