@@ -11,6 +11,6 @@ RUN mkdir -p /data && \
 RUN tar -xzf portainer.tar.gz --strip-components=1 && \
 	rm portainer.tar.gz
 
-EXPOSE 9000
+EXPOSE 9443
 
-CMD ["/app/portainer", "--bind", ":9000", "--data", "/data"]
+CMD ["/app/portainer", "--data", "/data"]

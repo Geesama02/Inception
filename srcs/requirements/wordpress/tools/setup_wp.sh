@@ -3,6 +3,11 @@
 set -e
 set -x
 
+export WORDPRESS_DB_USER=$(cat $WORDPRESS_DB_USER)
+export WORDPRESS_USER_PASSWORD=$(cat $WORDPRESS_USER_PASSWORD)
+export WORDPRESS_ADMIN_USER=$(cat $WORDPRESS_ADMIN_USER)
+export WORDPRESS_ADMIN_PASSWORD=$(cat $WORDPRESS_ADMIN_PASSWORD)
+
 until mysqladmin ping -h"${WORDPRESS_DB_HOST}" --silent; do
     sleep 2
 done

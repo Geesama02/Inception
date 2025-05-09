@@ -3,6 +3,11 @@
 set -e
 set -x
 
+export MARIADB_ROOT_PASSWORD=$(cat $MARIADB_ROOT_PASSWORD)
+export MARIADB_USER=$(cat $MARIADB_USER)
+export MARIADB_USER_PASSWORD=$(cat $MARIADB_USER_PASSWORD)
+
+
 mkdir -p /run/mysqld
 chown mysql:mysql /run/mysqld
 

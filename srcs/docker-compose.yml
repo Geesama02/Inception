@@ -20,12 +20,12 @@ services:
     environment:
       WORDPRESS_DB_NAME: ${DATABASE_NAME}
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_USER: ${MARIADB_USER}
-      WORDPRESS_USER_PASSWORD: ${MARIADB_USER_PASSWORD}
+      WORDPRESS_DB_USER: /run/secrets/credentials
+      WORDPRESS_USER_PASSWORD: /run/secrets/db_password
       WORDPRESS_URL: ${WORDPRESS_URL}
       WORDPRESS_TITLE: ${WORDPRESS_TITLE}
-      WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
-      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+      WORDPRESS_ADMIN_USER: /run/secrets/wp_admin_user
+      WORDPRESS_ADMIN_PASSWORD: /run/secrets/wp_admin_password
       WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
     expose:
       - 9000
@@ -34,13 +34,18 @@ services:
     networks:
       - docker-network
     restart: on-failure
+    secrets:
+      - wp_admin_password
+      - wp_admin_user
+      - credentials
+      - db_password
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_USER_PASSWORD: ${MARIADB_USER_PASSWORD}
+      MARIADB_ROOT_PASSWORD: /run/secrets/db_root_password
+      MARIADB_USER: /run/secrets/credentials
+      MARIADB_USER_PASSWORD: /run/secrets/db_password
       DATABASE_NAME: ${DATABASE_NAME}
     volumes:
       - wordpress_data:/var/lib/mysql
@@ -49,6 +54,10 @@ services:
     networks:
       - docker-network
     restart: on-failure
+    secrets:
+      - db_root_password
+      - credentials
+      - db_password
   redis:
     build: requirements/bonus/redis/.
     container_name: redis
@@ -62,10 +71,10 @@ services:
   ftp:
     build: 
       context: requirements/bonus/ftp/.
-      args: 
-        FTP_USER: ${FTP_USER}
-        FTP_PASS: ${FTP_PASS}
     container_name: ftp
+    environment: 
+      FTP_USER: /run/secrets/ftp_user
+      FTP_PASS: /run/secrets/ftp_password
     volumes:
       - wordpress_files:/var/www/wp
     expose:
@@ -76,6 +85,9 @@ services:
     restart: on-failure
     depends_on:
       - wordpress
+    secrets:
+      - ftp_user
+      - ftp_password
   adminer:
     build: requirements/bonus/adminer/.
     container_name: adminer
@@ -96,7 +108,7 @@ services:
     build: requirements/bonus/portainer/.
     container_name: portainer
     ports:
-      - "9000:9000"
+      - "9443:9443"
     networks:
       - docker-network
     volumes:
@@ -113,3 +125,19 @@ volumes:
   wordpress_data:
   redis_data:
   portainer_data:
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_admin_user:
+    file: ../secrets/wp_admin_user.txt
+  ftp_user:
+    file: ../secrets/ftp_user.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt
