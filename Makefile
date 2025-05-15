@@ -1,5 +1,5 @@
 all:
-	cd srcs && docker-compose build --no-cache && docker compose up -d
+	cd srcs && docker compose build && docker compose up -d
 
 down:
 	cd srcs && docker compose down

@@ -32,6 +32,8 @@ if ! wp core is-installed --allow-root; then
                     --path="/var/www/html" \
                     --skip-email \
                     --allow-root
+    
+    wp user create $WORDPRESS_DB_USER $WORDPRESS_USER_EMAIL --user_pass=${WORDPRESS_USER_PASSWORD} --allow-root
 fi
 
 wp option update siteurl "$WORDPRESS_URL" --allow-root
