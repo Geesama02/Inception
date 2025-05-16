@@ -13,4 +13,4 @@ RUN tar -xzf portainer.tar.gz --strip-components=1 && \
 
 EXPOSE 9443
 
-CMD ["/app/portainer", "--data", "/data"]
+ENTRYPOINT ["/app/portainer", "--data", "/data"]

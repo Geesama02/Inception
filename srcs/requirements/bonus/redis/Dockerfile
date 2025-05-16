@@ -5,4 +5,4 @@ RUN apt update -y && apt upgrade -y && \
 
 EXPOSE 6379
 
-CMD ["redis-server", "--protected-mode no"]
+ENTRYPOINT ["redis-server", "--protected-mode no"]

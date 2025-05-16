@@ -8,7 +8,7 @@ RUN mkdir -p /etc/nginx/ssl && \
     -keyout /etc/nginx/ssl/key.pem \
     -out /etc/nginx/ssl/certificate.pem \
     -days 365 \
-    -subj "/CN=localhost"
+    -subj "/CN=oait-laa.42.fr"
 
 COPY conf/config.conf /etc/nginx/nginx.conf
 
