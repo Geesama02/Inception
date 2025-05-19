@@ -4,7 +4,7 @@ services:
     image: nginx
     container_name: nginx
     ports:
-      - "8080:443"
+      - "443:443"
       - "8081:8081"
     depends_on:
       - wordpress
@@ -113,7 +113,7 @@ services:
     restart: on-failure
   portainer:
     build: requirements/bonus/portainer/.
-    image: nginx
+    image: portainer
     container_name: portainer
     ports:
       - "9443:9443"
@@ -129,8 +129,18 @@ networks:
     driver: bridge
 
 volumes:
-  wordpress_files:
   wordpress_data:
+    driver: local
+    driver_opts:
+        type: none
+        device: /home/oait-laa/data/wordpress_data
+        o: bind
+  wordpress_files:
+    driver: local
+    driver_opts:
+        type: none
+        device: /home/oait-laa/data/wordpress_files
+        o: bind
   redis_data:
   portainer_data:
 

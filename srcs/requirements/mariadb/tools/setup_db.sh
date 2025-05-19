@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+# set -e
 set -x
 
 export MARIADB_ROOT_PASSWORD=$(cat $MARIADB_ROOT_PASSWORD)
@@ -17,7 +17,7 @@ mysqld_safe &
 
 sleep 5
 
-mysql -u root --skip-password <<EOF
+mysql -u root  <<EOF
 CREATE DATABASE IF NOT EXISTS \`${DATABASE_NAME}\`;
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
 CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_USER_PASSWORD}';
