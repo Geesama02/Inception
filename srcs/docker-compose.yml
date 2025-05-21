@@ -12,7 +12,7 @@ services:
       - docker-network
     volumes:
       - wordpress_files:/var/www/html
-    restart: on-failure
+    restart: always
   wordpress:
     build: requirements/wordpress/.
     image: wordpress
@@ -36,7 +36,7 @@ services:
       - mariadb
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
     secrets:
       - wp_admin_password
       - wp_admin_user
@@ -57,7 +57,7 @@ services:
       - 3306
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
     secrets:
       - db_root_password
       - credentials
@@ -72,7 +72,7 @@ services:
       - 6379
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
   ftp:
     build: requirements/bonus/ftp/.
     image: ftp
@@ -87,7 +87,7 @@ services:
       - "21001:21001"
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
     depends_on:
       - wordpress
     secrets:
@@ -101,7 +101,7 @@ services:
       - "8081:8081"
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
   web:
     build: requirements/bonus/web/.
     image: web
@@ -110,7 +110,7 @@ services:
       - "8000:8000"
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
   portainer:
     build: requirements/bonus/portainer/.
     image: portainer
@@ -122,7 +122,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
-    restart: on-failure
+    restart: always
 
 networks:
   docker-network:
