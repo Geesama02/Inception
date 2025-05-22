@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt update -y && \
-    apt install -y vsftpd openssl
+    apt install -y vsftpd
     
 COPY setup.sh /setup.sh
 
